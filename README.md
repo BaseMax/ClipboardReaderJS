@@ -11,6 +11,8 @@ ClipboardReaderJS is a simple web-based tool that allows users to paste content 
 - Supports multiple image formats (e.g., JPG, PNG, GIF, SVG, TIFF, WebP, and more).
 - Identifies binary data and displays it in a readable format.
 
+![ClipboardReaderJS](demo.jpg)
+
 ## Installation
 
 Clone or download the repository to your local machine:
