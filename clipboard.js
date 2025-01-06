@@ -1,10 +1,17 @@
+// Elements
+const output = document.getElementById('output');
+
 // Functions
+function updateOutput(content) {
+    output.innerHTML = content;
+}
+
 function handleText(text) {
-    document.getElementById('output').innerHTML = `Plain Text detected: <pre>${text}</pre>`;
+    updateOutput(`Plain Text detected: <pre>${escapeHtml(text)}</pre>`);
 }
 
 function handleHTML(html) {
-    document.getElementById('output').innerHTML = `HTML detected: <pre>${html}</pre>`;
+    updateOutput(`HTML detected: <div>${html}</div>`);
 }
 
 function handleFiles(files) {
@@ -13,19 +20,32 @@ function handleFiles(files) {
         outputHTML += `<li>${file.name} (Type: ${file.type}, Size: ${file.size} bytes)</li>`;
     }
     outputHTML += '</ul>';
-    document.getElementById('output').innerHTML = outputHTML;
+    updateOutput(outputHTML);
 }
 
 function handleImage(data) {
     const image = new Image();
     image.src = data;
     image.onload = () => {
-        document.getElementById('output').innerHTML = `Image detected: <img src="${data}" alt="Pasted Image" />`;
+        updateOutput(`Image detected: <img src="${data}" alt="Pasted Image" />`);
+    };
+    image.onerror = () => {
+        updateOutput(`Failed to load image.`);
     };
 }
 
 function handleBinary(binaryData) {
-    document.getElementById('output').innerHTML = `Binary detected: <pre>${binaryData}</pre>`;
+    updateOutput(`Binary detected: <pre>${escapeHtml(binaryData)}</pre>`);
+}
+
+function escapeHtml(text) {
+    return text.replace(/[&<>"']/g, (match) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+    })[match]);
 }
 
 function isBinary(text) {
@@ -34,7 +54,8 @@ function isBinary(text) {
 
 function isImage(text) {
     const imagePattern = /\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i;
-    return imagePattern.test(text);
+    const base64Pattern = /^data:image\/(jpeg|png|gif|bmp|svg\+xml);base64,/i;
+    return imagePattern.test(text) || base64Pattern.test(text);
 }
 
 // Events
