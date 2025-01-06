@@ -55,13 +55,16 @@ function isBinary(text) {
 function isImage(text) {
     const imagePattern = /\.(jpg|jpeg|png|gif|bmp|svg|webp|tiff|ico|heif|heic|apng|avif)$/i;
     const base64Pattern = /^data:image\/(jpeg|png|gif|bmp|svg\+xml|tiff|ico|heif|heic|apng|avif);base64,/i;
+
     return imagePattern.test(text) || base64Pattern.test(text);
 }
 
 // Events
 document.getElementById('clipboardText').addEventListener('paste', (e) => {
     e.preventDefault();
+
     const clipboardData = e.clipboardData || window.clipboardData;
+    
     const pastedText = clipboardData.getData('Text');
     const pastedHTML = clipboardData.getData('text/html');
     const pastedFiles = clipboardData.files;
