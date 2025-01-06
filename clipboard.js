@@ -53,8 +53,8 @@ function isBinary(text) {
 }
 
 function isImage(text) {
-    const imagePattern = /\.(jpg|jpeg|png|gif|bmp|svg|webp)$/i;
-    const base64Pattern = /^data:image\/(jpeg|png|gif|bmp|svg\+xml);base64,/i;
+    const imagePattern = /\.(jpg|jpeg|png|gif|bmp|svg|webp|tiff|ico|heif|heic|apng|avif)$/i;
+    const base64Pattern = /^data:image\/(jpeg|png|gif|bmp|svg\+xml|tiff|ico|heif|heic|apng|avif);base64,/i;
     return imagePattern.test(text) || base64Pattern.test(text);
 }
 
